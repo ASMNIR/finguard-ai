@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software or its methodology, please cite it as below."
+title: "FinGuard-AI: U.S. Financial Fraud and Consumer Harm Risk Intelligence and Consumer Assistance Platform"
+type: software
+authors:
+  - name: "A S M FAHIM"
+    given-names: "FAHIM"
+    family-names: "A S M"
+version: "1.1.0"
+date-released: "2026-07-18"
+repository-code: "https://github.com/<to-be-set>/finguard-ai"
+license: MIT
+keywords:
+  - financial fraud
+  - consumer protection
+  - explainable AI
+  - APP scam
+  - AML
+  - risk intelligence
+abstract: >
+  FinGuard-AI is a research prototype that converts financial-fraud and
+  consumer-complaint narratives into transparent, rules-based typology
+  classifications and four explainable 0-100 risk scores, together with
+  consumer-assistance guidance (action plans, evidence checklists, case
+  timelines, and dispute-letter templates). It is a research prototype and
+  is not production-ready.

@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-heading: "Manrope", "Sora", system-ui, sans-serif;
+  --font-body: "Inter", "Source Sans 3", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-offwhite text-slate-900 antialiased;
+}
+
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-navy-900 focus:px-4 focus:py-2 focus:text-white;
+}
+
+.prose-content h2 {
+  @apply mt-10 font-heading text-2xl font-semibold text-navy-900;
+}
+
+.prose-content h3 {
+  @apply mt-6 font-heading text-lg font-semibold text-navy-800;
+}
+
+.prose-content p {
+  @apply mt-3 max-w-prose leading-relaxed text-slate-900;
+}
+
+.prose-content ul {
+  @apply mt-3 list-disc space-y-1 pl-6;
+}
+
+.prose-content li {
+  @apply leading-relaxed;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-navy-950 text-slate-200;
+  }
+}
