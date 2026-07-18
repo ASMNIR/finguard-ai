@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: finguard-ai-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: CORS_ORIGINS
+        value: https://finguard-ai.vercel.app
+      - key: MAX_NARRATIVE_CHARS
+        value: "8000"
+      - key: MAX_REQUEST_BODY_BYTES
+        value: "262144"
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "30"
+      - key: AUTHOR_NAME
+        value: A S M FAHIM
+      - key: AUTHOR_ROLE
+        value: "Founder, Independent Researcher, and System Designer"
+      - key: AUTHOR_EMAIL
+        value: asmfahim987@gmail.com
+      - key: AUTHOR_AFFILIATION
+        value: "University of New Haven, Finance and Financial Analytics"
+      - key: AUTHOR_ORCID
+        value: "0009-0006-3777-5688"
+      - key: AUTHOR_GOOGLE_SCHOLAR
+        value: "https://scholar.google.com/citations?user=SAKtQWcAAAAJ&hl=en"
+      - key: CONTACT_EMAIL
+        value: asmfahim987@gmail.com
