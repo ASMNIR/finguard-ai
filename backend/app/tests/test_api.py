@@ -79,6 +79,16 @@ def test_dashboard_sample_summary_endpoint():
     assert body["notice"].startswith("Synthetic")
 
 
+def test_sample_data_path_resolves_to_an_existing_file():
+    # Regression test: the path resolution must find data/sample_data.csv
+    # under both the local-dev layout (backend/app/services/, four levels
+    # above the repo root) and the container layout (app/services/, three
+    # levels above /app), rather than silently 500-ing in production.
+    from app.services.csv_service import SAMPLE_DATA_PATH
+
+    assert SAMPLE_DATA_PATH.exists()
+
+
 def test_dashboard_sample_csv_download():
     response = client.get("/api/dashboard/sample-data.csv")
     assert response.status_code == 200

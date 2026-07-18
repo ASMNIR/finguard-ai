@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Any
 
@@ -28,8 +29,30 @@ REQUIRED_COLUMNS = [
     "outcome",
 ]
 
-_PROJECT_ROOT = Path(__file__).resolve().parents[3]
-SAMPLE_DATA_PATH = _PROJECT_ROOT / "data" / "sample_data.csv"
+def _resolve_sample_data_path() -> Path:
+    """Locate data/sample_data.csv across differing directory layouts.
+
+    Local development runs this file at <repo>/backend/app/services/, four
+    levels below the repo root. The container build (see backend/Dockerfile)
+    copies backend/app/ and data/ as siblings under /app, so the same file
+    sits only three levels above data/ there. Try both, plus an explicit
+    override, rather than hard-coding one layout.
+    """
+    env_override = os.environ.get("SAMPLE_DATA_PATH")
+    if env_override:
+        return Path(env_override)
+
+    here = Path(__file__).resolve()
+    for depth in (3, 2):
+        candidate = here.parents[depth] / "data" / "sample_data.csv"
+        if candidate.exists():
+            return candidate
+    # Fall back to the local-dev layout so the error message points at the
+    # expected location even when neither candidate exists.
+    return here.parents[3] / "data" / "sample_data.csv"
+
+
+SAMPLE_DATA_PATH = _resolve_sample_data_path()
 
 _TYPOLOGY_DISPLAY_MAP = {
     "app scam": "APP scam",
