@@ -84,7 +84,9 @@ export default function AboutPage() {
           {attribution.authorLinkedin && <a href={attribution.authorLinkedin} className="text-teal-700 underline">LinkedIn</a>}
           {attribution.authorGithub && <a href={attribution.authorGithub} className="text-teal-700 underline">GitHub</a>}
           {attribution.authorGoogleScholar && <a href={attribution.authorGoogleScholar} className="text-teal-700 underline">Google Scholar</a>}
-          {attribution.authorOrcid && <a href={attribution.authorOrcid} className="text-teal-700 underline">ORCID</a>}
+          {attribution.authorOrcid && (
+            <a href={`https://orcid.org/${attribution.authorOrcid}`} className="text-teal-700 underline">ORCID</a>
+          )}
           {attribution.authorSsrn && <a href={attribution.authorSsrn} className="text-teal-700 underline">SSRN</a>}
         </div>
       </div>
