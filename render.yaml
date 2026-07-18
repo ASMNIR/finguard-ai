@@ -10,7 +10,7 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: CORS_ORIGINS
-        value: https://finguard-ai.vercel.app
+        value: https://frontend-five-liard-58.vercel.app,https://frontend-lu93q2p67-asmfahim987-5408s-projects.vercel.app
       - key: MAX_NARRATIVE_CHARS
         value: "8000"
       - key: MAX_REQUEST_BODY_BYTES
@@ -31,3 +31,5 @@ services:
         value: "https://scholar.google.com/citations?user=SAKtQWcAAAAJ&hl=en"
       - key: CONTACT_EMAIL
         value: asmfahim987@gmail.com
+      - key: LIVE_APP_URL
+        value: https://frontend-five-liard-58.vercel.app
