@@ -98,9 +98,13 @@ See `docs/testing.md` for exactly what has and has not been run, stated plainly.
 
 `POST /api/analyze`, `POST /api/redact-preview`, `GET /api/rules`, `GET /api/dashboard/sample-summary`, `POST /api/dashboard/upload-summary`, `GET /api/dashboard/sample-data.csv`, `GET /api/letters/templates`, `POST /api/letters/generate`, `POST /api/reports/pdf`, `POST /api/feedback`, `POST /api/contact`, `GET /api/health`, `GET /api/meta/attribution`. Full interactive documentation at `/api/docs` (OpenAPI/Swagger).
 
-## Deployment
+## Live deployment
 
-Not yet deployed to a public URL as part of this engagement -- see `docs/deployment.md` for exact, tested-locally-buildable steps to deploy the frontend to Vercel and the backend to Render/Railway/Fly.io/Cloud Run once you have your own account credentials.
+- **Website:** https://frontend-five-liard-58.vercel.app
+- **API:** https://finguard-ai-api.onrender.com (interactive docs at `/api/docs`)
+- **Source:** https://github.com/ASMNIR/finguard-ai
+
+The backend runs on Render's free tier, which spins down after inactivity -- the first request after idle time may take up to ~50 seconds to respond while the instance wakes up. See `docs/deployment.md` for the full deployment process and how to redeploy or promote to a paid always-on tier.
 
 ## Documentation index
 

@@ -1,14 +1,18 @@
 # Deployment
 
-## Current status: built and tested locally; not yet deployed to a public URL
+## Current status: live
 
-This repository has been built, containerized, and verified locally in this engagement:
+| Component | URL | Host |
+|---|---|---|
+| Frontend | https://frontend-five-liard-58.vercel.app | Vercel (free/Hobby tier) |
+| Backend API | https://finguard-ai-api.onrender.com | Render (free tier, Docker) |
+| Source | https://github.com/ASMNIR/finguard-ai | GitHub |
 
-- Backend: 99 automated pytest tests passing; manually smoke-tested via a live local `uvicorn` server (health check, analyze, dashboard, PDF generation all verified against real HTTP responses).
-- Frontend: `npm run build` succeeds across all 13 routes with zero TypeScript or ESLint errors.
-- Docker: `backend/Dockerfile` and `frontend/Dockerfile` are provided and `docker-compose.yml` wires them together.
+Both were verified live end-to-end (not just built): `/api/health`, `POST /api/analyze`, `/api/dashboard/sample-summary`, and cross-origin requests from the actual Vercel domain to the actual Render domain all returned real 200 responses at deploy time.
 
-**No public URL has been minted.** Deploying to Vercel and Render (or equivalent) requires the project owner's own account and API/deploy tokens, which were not available in this environment. The steps below are exact and copy-pasteable for whoever holds those credentials to complete the deployment; do not treat any URL as live until it has actually been opened in a browser after following these steps.
+**Free-tier caveat:** Render's free web-service tier spins down after ~15 minutes of inactivity. The first request after idle time can take up to ~50 seconds while the instance restarts; subsequent requests are fast. If this matters for a live demo, upgrade the Render service to a paid "Starter" instance beforehand (Render dashboard → service → Settings → Instance Type), which removes the spin-down behavior.
+
+The steps below document exactly how this deployment was produced, so it can be redeployed, forked, or moved to a different host.
 
 ## Frontend: Vercel
 
