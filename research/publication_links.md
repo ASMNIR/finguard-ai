@@ -4,7 +4,7 @@ This file is the single place to update once any of the following become availab
 
 | Item | Status | Link |
 |---|---|---|
-| Working paper (this repository, `research/paper/FinGuard-AI-working-paper.docx`) | Working paper, not peer-reviewed | Set `RESEARCH_PAPER_URL` once hosted |
+| Working paper (this repository, `research/paper/FinGuard-AI A Rules-First, Explainable Framework for Narrative-Based Financial Fraud and Consumer-Harm Triage in U.S. Financial Services.docx`) | Working paper, not peer-reviewed | Set `RESEARCH_PAPER_URL` once hosted |
 | SSRN preprint | Not yet posted | Set `AUTHOR_SSRN` once available |
 | Zenodo DOI (for the codebase / dataset release) | Not yet minted | Set `AUTHOR_ZENODO` once available |
 | Google Scholar profile | Not yet linked | Set `AUTHOR_GOOGLE_SCHOLAR` once available |
