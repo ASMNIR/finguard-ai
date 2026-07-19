@@ -6,6 +6,16 @@
   --font-heading: "Manrope", "Sora", system-ui, sans-serif;
   --font-body: "Inter", "Source Sans 3", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* Every page and component here is designed and tested against a light
+     surface only. Telling the browser the page is light-only stops phones
+     and browsers set to dark mode from auto-inverting form controls/scrollbars
+     and, combined with removing the old body-only dark override below, stops
+     text from going invisible: that override flipped the page background to
+     dark navy but had no matching dark treatment for the headings, cards, and
+     borders built throughout the site, so text rendered in its light-mode
+     dark color on a now-dark background. A real dark theme needs its own
+     pass across every component, not a single global background flip. */
+  color-scheme: light;
 }
 
 @keyframes fadeSlideUp {
@@ -60,10 +70,4 @@ body {
 
 .prose-content li {
   @apply leading-relaxed;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    @apply bg-navy-950 text-slate-200;
-  }
 }

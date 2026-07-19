@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "./Container";
+import { Logo } from "./Logo";
 import { getAttribution, PROJECT_NAME } from "@/lib/config";
 
 const COLUMNS: { title: string; links: { href: string; label: string }[] }[] = [
@@ -40,12 +41,7 @@ export function Footer() {
       <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 font-heading text-lg font-bold text-white">
-            <span
-              aria-hidden
-              className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-teal-500 to-cyan-400 text-xs font-bold text-navy-950"
-            >
-              FG
-            </span>
+            <Logo className="h-8 w-8" gradientId="footerLogoGradient" variant="light" />
             {PROJECT_NAME}
           </div>
           <p className="mt-3 max-w-xs text-sm text-slate-400">
