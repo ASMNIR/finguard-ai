@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   Cell,
   LabelList,
   ResponsiveContainer,
@@ -23,8 +22,44 @@ const SEVERITY_COLORS: Record<string, string> = {
   Critical: "#D84A4A",
 };
 
-const GRIDLINE = "#E7ECF1";
-const AXIS_TEXT = "#5E697D";
+const SEVERITY_GRADIENT_ID: Record<string, string> = {
+  Low: "gradLow",
+  Moderate: "gradModerate",
+  High: "gradHigh",
+  Critical: "gradCritical",
+};
+
+/** Shared SVG gradient/shadow defs, referenced by fill="url(#id)" across the charts below. */
+function ChartDefs() {
+  return (
+    <defs>
+      <linearGradient id="gradTeal" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="#0BA5AE" />
+        <stop offset="100%" stopColor="#087F8C" />
+      </linearGradient>
+      <linearGradient id="gradNavy" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#12B8B0" />
+        <stop offset="100%" stopColor="#087F8C" />
+      </linearGradient>
+      <linearGradient id="gradLow" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#34C795" />
+        <stop offset="100%" stopColor="#17A673" />
+      </linearGradient>
+      <linearGradient id="gradModerate" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#F0B94E" />
+        <stop offset="100%" stopColor="#E6A52D" />
+      </linearGradient>
+      <linearGradient id="gradHigh" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#F0894A" />
+        <stop offset="100%" stopColor="#E8702A" />
+      </linearGradient>
+      <linearGradient id="gradCritical" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#E56E6E" />
+        <stop offset="100%" stopColor="#D84A4A" />
+      </linearGradient>
+    </defs>
+  );
+}
 
 function toChartData(record: Record<string, number>) {
   return Object.entries(record)
@@ -43,10 +78,10 @@ function ChartTooltip({ active, payload }: { active?: boolean; payload?: Tooltip
   const { name } = entry.payload;
   const value = entry.value;
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 shadow-lg">
-      <p className="text-xs font-medium text-slate-500">{name}</p>
-      <p className="mt-0.5 font-heading text-lg font-semibold text-navy-900">
-        {value.toLocaleString()} <span className="text-xs font-normal text-slate-500">case{value === 1 ? "" : "s"}</span>
+    <div className="rounded-2xl bg-navy-950 px-4 py-3 shadow-xl">
+      <p className="text-xs font-medium text-slate-400">{name}</p>
+      <p className="mt-0.5 font-heading text-xl font-semibold text-white">
+        {value.toLocaleString()} <span className="text-xs font-normal text-slate-400">case{value === 1 ? "" : "s"}</span>
       </p>
     </div>
   );
@@ -84,7 +119,7 @@ export function DashboardClient() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-white px-5 py-4 shadow-sm">
+      <div className="flex items-start gap-3 rounded-2xl bg-white px-5 py-4 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_20px_-6px_rgba(16,24,40,0.10)]">
         <span aria-hidden className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-amber-100 text-xs font-bold text-amber-700">!</span>
         <p className="text-sm leading-relaxed text-slate-700">
           <strong className="font-semibold text-navy-900">{summary.notice}</strong> Results shown here do not represent
@@ -115,52 +150,59 @@ export function DashboardClient() {
       </div>
 
       <ChartCard title="Typology distribution" description="Count of synthetic cases per fraud/risk typology.">
-        <ResponsiveContainer width="100%" height={360}>
-          <BarChart data={typologyData} layout="vertical" margin={{ left: 8, right: 28, top: 4, bottom: 4 }} barCategoryGap={10}>
-            <CartesianGrid horizontal={false} stroke={GRIDLINE} />
-            <XAxis type="number" allowDecimals={false} tick={{ fontSize: 11, fill: AXIS_TEXT }} axisLine={{ stroke: GRIDLINE }} tickLine={false} />
-            <YAxis type="category" dataKey="name" width={230} tick={{ fontSize: 12, fill: AXIS_TEXT }} axisLine={false} tickLine={false} />
-            <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(8,127,140,0.06)" }} />
-            <Bar dataKey="value" fill="#087F8C" radius={[0, 6, 6, 0]} maxBarSize={22}>
-              <LabelList dataKey="value" position="right" style={{ fill: "#172033", fontSize: 12, fontWeight: 600 }} />
+        <ResponsiveContainer width="100%" height={380}>
+          <BarChart data={typologyData} layout="vertical" margin={{ left: 8, right: 32, top: 4, bottom: 4 }} barCategoryGap={14}>
+            <ChartDefs />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="name" width={230} tick={{ fontSize: 12.5, fill: "#334155" }} axisLine={false} tickLine={false} />
+            <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(8,127,140,0.05)" }} />
+            <Bar dataKey="value" fill="url(#gradTeal)" radius={[0, 8, 8, 0]} maxBarSize={20} style={{ filter: "drop-shadow(0 2px 4px rgba(8,127,140,0.25))" }}>
+              <LabelList dataKey="value" position="right" style={{ fill: "#0B263D", fontSize: 13, fontWeight: 700 }} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <ChartCard title="Payment-channel distribution" description="Count of synthetic cases per payment channel.">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={channelData} margin={{ bottom: 44, top: 12 }} barCategoryGap={16}>
-              <CartesianGrid vertical={false} stroke={GRIDLINE} />
-              <XAxis dataKey="name" angle={-35} textAnchor="end" interval={0} tick={{ fontSize: 10, fill: AXIS_TEXT }} axisLine={{ stroke: GRIDLINE }} tickLine={false} />
-              <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: AXIS_TEXT }} axisLine={false} tickLine={false} />
-              <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(18,184,176,0.08)" }} />
-              <Bar dataKey="value" fill="#12B8B0" radius={[6, 6, 0, 0]} maxBarSize={40}>
-                <LabelList dataKey="value" position="top" style={{ fill: "#172033", fontSize: 12, fontWeight: 600 }} />
+        <ChartCard title="Payment-channel distribution" description="Count of synthetic cases per payment channel, ranked highest to lowest.">
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={channelData} layout="vertical" margin={{ left: 8, right: 32, top: 4, bottom: 4 }} barCategoryGap={10}>
+              <ChartDefs />
+              <XAxis type="number" hide />
+              <YAxis type="category" dataKey="name" width={120} tick={{ fontSize: 12.5, fill: "#334155" }} axisLine={false} tickLine={false} />
+              <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(18,184,176,0.06)" }} />
+              <Bar dataKey="value" fill="url(#gradTeal)" radius={[0, 8, 8, 0]} maxBarSize={18} style={{ filter: "drop-shadow(0 2px 4px rgba(18,184,176,0.3))" }}>
+                <LabelList dataKey="value" position="right" style={{ fill: "#0B263D", fontSize: 13, fontWeight: 700 }} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
 
         <ChartCard title="Consumer-harm and recovery severity" description="Overall severity band across all synthetic cases.">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={severityData} margin={{ top: 12 }} barCategoryGap={24}>
-              <CartesianGrid vertical={false} stroke={GRIDLINE} />
-              <XAxis dataKey="name" tick={{ fontSize: 12, fill: AXIS_TEXT }} axisLine={{ stroke: GRIDLINE }} tickLine={false} />
-              <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: AXIS_TEXT }} axisLine={false} tickLine={false} />
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={severityData} margin={{ top: 24 }} barCategoryGap={28}>
+              <ChartDefs />
+              <XAxis dataKey="name" tick={{ fontSize: 12.5, fill: "#334155", fontWeight: 600 }} axisLine={false} tickLine={false} />
+              <YAxis hide />
               <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(23,32,51,0.04)" }} />
-              <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={56}>
+              <Bar dataKey="value" radius={[10, 10, 0, 0]} maxBarSize={64}>
                 {severityData.map((entry) => (
-                  <Cell key={entry.name} fill={SEVERITY_COLORS[entry.name]} />
+                  <Cell
+                    key={entry.name}
+                    fill={`url(#${SEVERITY_GRADIENT_ID[entry.name]})`}
+                    style={{ filter: `drop-shadow(0 4px 6px ${SEVERITY_COLORS[entry.name]}40)` }}
+                  />
                 ))}
-                <LabelList dataKey="value" position="top" style={{ fill: "#172033", fontSize: 12, fontWeight: 600 }} />
+                <LabelList dataKey="value" position="top" style={{ fill: "#0B263D", fontSize: 14, fontWeight: 700 }} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5">
+          <div className="mt-4 flex flex-wrap gap-2">
             {severityOrder.map((name) => (
-              <span key={name} className="inline-flex items-center gap-1.5 text-xs text-slate-600">
+              <span
+                key={name}
+                className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600"
+              >
                 <span aria-hidden className="h-2 w-2 rounded-full" style={{ backgroundColor: SEVERITY_COLORS[name] }} />
                 {name}
               </span>
@@ -169,8 +211,8 @@ export function DashboardClient() {
         </ChartCard>
       </div>
 
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-        <h2 className="font-heading text-lg font-semibold text-navy-900">High-risk case queue</h2>
+      <div className="rounded-3xl bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_24px_-4px_rgba(16,24,40,0.08)] sm:p-6">
+        <h2 className="font-heading text-lg font-semibold tracking-tight text-navy-900">High-risk case queue</h2>
         <p className="mt-1 text-xs text-slate-500">Sorted by recovery urgency, then fraud risk, then consumer harm.</p>
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[720px] text-sm">
@@ -227,21 +269,27 @@ function MetricCard({
 }) {
   return (
     <div
-      className={`rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${wide ? "col-span-2 lg:col-span-2" : ""}`}
+      className={`rounded-2xl bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_20px_-6px_rgba(16,24,40,0.10)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_1px_2px_rgba(16,24,40,0.06),0_12px_28px_-6px_rgba(16,24,40,0.14)] ${wide ? "col-span-2 lg:col-span-2" : ""}`}
     >
       <div className={`inline-flex h-2 w-2 rounded-full ${ACCENT_DOT[accent]}`} aria-hidden />
       <p className="mt-2 text-xs font-medium text-slate-500">{label}</p>
-      <p className="mt-1 font-heading text-2xl font-semibold text-navy-900">{value}</p>
+      <p className="mt-1 font-heading text-2xl font-semibold tracking-tight text-navy-900">{value}</p>
     </div>
   );
 }
 
 function ChartCard({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-      <h2 className="font-heading text-lg font-semibold text-navy-900">{title}</h2>
-      <p className="mt-1 text-xs text-slate-500">{description}</p>
-      <div className="mt-4">{children}</div>
+    <div className="relative overflow-hidden rounded-3xl bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_24px_-4px_rgba(16,24,40,0.08)] sm:p-6">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-teal-500/[0.06] blur-2xl"
+      />
+      <div className="relative">
+        <h2 className="font-heading text-lg font-semibold tracking-tight text-navy-900">{title}</h2>
+        <p className="mt-1 text-xs text-slate-500">{description}</p>
+        <div className="mt-5">{children}</div>
+      </div>
     </div>
   );
 }
