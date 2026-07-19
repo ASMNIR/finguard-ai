@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Container } from "@/components/Container";
 import { PageHero } from "@/components/content/PageHero";
 import { SectionCard, accentFor } from "@/components/content/SectionCard";
@@ -104,12 +105,13 @@ export default function AboutPage() {
         <div className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_24px_-4px_rgba(16,24,40,0.08)] sm:p-8">
           <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-teal-500/[0.06] blur-2xl" />
           <div className="relative flex items-center gap-4">
-            <span
-              aria-hidden
-              className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-gradient-to-br from-navy-900 to-teal-500 font-heading text-xl font-bold text-white"
-            >
-              AF
-            </span>
+            <Image
+              src="/images/asm-fahim.jpg"
+              alt={`Portrait of ${attribution.authorName}`}
+              width={64}
+              height={64}
+              className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-white shadow-md"
+            />
             <div>
               <p className="font-heading text-lg font-semibold text-navy-900">{attribution.authorName}</p>
               <p className="text-sm text-slate-600">{attribution.authorRole}</p>
