@@ -96,7 +96,16 @@ export default function HomePage() {
               <Link href="/governance" className="underline-offset-4 transition hover:text-teal-700 hover:underline">Read Governance Framework</Link>
             </div>
 
-            <p className="mt-10 text-sm text-slate-500">Created by {attribution.authorName}</p>
+            <p className="mt-10 text-sm text-slate-500">
+              Created by{" "}
+              {attribution.authorGoogleScholar ? (
+                <a href={attribution.authorGoogleScholar} className="font-medium text-teal-700 underline underline-offset-2 hover:text-coral-600">
+                  {attribution.authorName}
+                </a>
+              ) : (
+                attribution.authorName
+              )}
+            </p>
           </Reveal>
 
           <Reveal delay={150} className="relative mx-auto w-full max-w-md lg:max-w-none">
