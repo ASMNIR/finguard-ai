@@ -116,33 +116,49 @@ export default function AboutPage() {
             <div>
               <p className="font-heading text-lg font-semibold text-navy-900">{attribution.authorName}</p>
               <p className="text-sm text-slate-600">{attribution.authorRole}</p>
-              {attribution.authorAffiliation && <p className="text-xs text-slate-500">{attribution.authorAffiliation}</p>}
+              <p className="flex flex-wrap items-center gap-x-2 text-xs text-slate-500">
+                {attribution.authorAffiliation}
+                {attribution.authorAffiliation && attribution.authorGoogleScholar && <span aria-hidden>·</span>}
+                {attribution.authorGoogleScholar && (
+                  <a href={attribution.authorGoogleScholar} className="font-medium text-teal-700 underline underline-offset-2 hover:text-coral-600">
+                    Google Scholar
+                  </a>
+                )}
+              </p>
             </div>
           </div>
           <p className="relative mt-4 max-w-2xl text-sm text-slate-700">
             FinGuard-AI was created and designed by {attribution.authorName} as an independent research project
             exploring explainable, governance-oriented risk intelligence for U.S. financial fraud and consumer harm.
           </p>
-          <div className="relative mt-4 flex flex-wrap gap-2 text-sm">
-            {attribution.authorLinkedin && (
-              <a href={attribution.authorLinkedin} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">LinkedIn</a>
-            )}
-            {attribution.authorGithub && (
-              <a href={attribution.authorGithub} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">GitHub</a>
-            )}
-            {attribution.authorGoogleScholar && (
-              <a href={attribution.authorGoogleScholar} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">Google Scholar</a>
-            )}
-            {attribution.authorOrcid && (
-              <a href={`https://orcid.org/${attribution.authorOrcid}`} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">ORCID</a>
-            )}
-            {attribution.authorSsrn && (
-              <a href={attribution.authorSsrn} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">SSRN</a>
-            )}
-            {attribution.authorZenodo && (
-              <a href={attribution.authorZenodo} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">Zenodo (DOI)</a>
-            )}
-          </div>
+
+          {(attribution.authorLinkedin || attribution.authorGithub || attribution.authorOrcid) && (
+            <div className="relative mt-4 flex flex-wrap gap-2 text-sm">
+              {attribution.authorLinkedin && (
+                <a href={attribution.authorLinkedin} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">LinkedIn</a>
+              )}
+              {attribution.authorGithub && (
+                <a href={attribution.authorGithub} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">GitHub</a>
+              )}
+              {attribution.authorOrcid && (
+                <a href={`https://orcid.org/${attribution.authorOrcid}`} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">ORCID</a>
+              )}
+            </div>
+          )}
+
+          {(attribution.authorZenodo || attribution.authorSsrn) && (
+            <div className="relative mt-5 border-t border-slate-100 pt-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Cite this research</p>
+              <div className="mt-2 flex flex-wrap gap-2 text-sm">
+                {attribution.authorZenodo && (
+                  <a href={attribution.authorZenodo} className="rounded-full bg-coral-50 px-3 py-1.5 font-medium text-coral-600 transition hover:bg-coral-100">Zenodo (DOI)</a>
+                )}
+                {attribution.authorSsrn && (
+                  <a href={attribution.authorSsrn} className="rounded-full bg-coral-50 px-3 py-1.5 font-medium text-coral-600 transition hover:bg-coral-100">SSRN</a>
+                )}
+              </div>
+            </div>
+          )}
         </Reveal>
       </Container>
     </>

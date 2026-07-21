@@ -36,13 +36,18 @@ export function Footer() {
   const attribution = getAttribution();
   const year = new Date().getFullYear();
 
-  const citationLinks: { href: string; label: string }[] = [
+  // Author-identity links (the person) vs. prototype-citation links (the paper/codebase) are kept visually
+  // distinct: mixing "Google Scholar" with "Zenodo DOI" in one row reads as if both describe the same thing.
+  const authorLinks: { href: string; label: string }[] = [
     attribution.authorGoogleScholar ? { href: attribution.authorGoogleScholar, label: "Google Scholar" } : null,
     attribution.authorOrcid ? { href: `https://orcid.org/${attribution.authorOrcid}`, label: "ORCID" } : null,
-    attribution.authorZenodo ? { href: attribution.authorZenodo, label: "Zenodo (DOI)" } : null,
-    attribution.authorSsrn ? { href: attribution.authorSsrn, label: "SSRN" } : null,
     attribution.authorGithub ? { href: attribution.authorGithub, label: "GitHub" } : null,
     attribution.authorLinkedin ? { href: attribution.authorLinkedin, label: "LinkedIn" } : null,
+  ].filter((link): link is { href: string; label: string } => link !== null);
+
+  const citationLinks: { href: string; label: string }[] = [
+    attribution.authorZenodo ? { href: attribution.authorZenodo, label: "Zenodo (DOI)" } : null,
+    attribution.authorSsrn ? { href: attribution.authorSsrn, label: "SSRN" } : null,
   ].filter((link): link is { href: string; label: string } => link !== null);
 
   return (
@@ -61,17 +66,34 @@ export function Footer() {
             developed by {attribution.authorName}.
           </p>
 
-          {citationLinks.length > 0 && (
+          {authorLinks.length > 0 && (
             <div className="mt-5 flex flex-wrap gap-2">
-              {citationLinks.map((link) => (
+              {authorLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:border-coral-400/60 hover:text-coral-300"
+                  className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:border-teal-400/60 hover:text-teal-300"
                 >
                   {link.label}
                 </a>
               ))}
+            </div>
+          )}
+
+          {citationLinks.length > 0 && (
+            <div className="mt-3">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">Cite this research</p>
+              <div className="mt-1.5 flex flex-wrap gap-2">
+                {citationLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="rounded-full border border-coral-400/30 bg-coral-500/10 px-3 py-1.5 text-xs font-medium text-coral-300 transition hover:border-coral-400/60 hover:bg-coral-500/20"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
             </div>
           )}
         </div>
