@@ -162,6 +162,27 @@ def test_contact_endpoint_rejects_empty_message():
     assert response.status_code == 400
 
 
+def test_contact_endpoint_reports_sent_when_email_delivery_succeeds(monkeypatch):
+    from app.api import contact as contact_module
+
+    monkeypatch.setattr(contact_module, "send_contact_email", lambda **kwargs: True)
+    response = client.post(
+        "/api/contact",
+        json={"inquiry_type": "research", "name": "Jane", "email": "jane@example.com", "message": "Hello."},
+    )
+    assert response.status_code == 200
+    assert "has been sent" in response.json()["message"]
+
+
+def test_send_contact_email_returns_false_without_api_key():
+    from app.services.email_service import send_contact_email
+
+    assert (
+        send_contact_email(inquiry_type="general", name="Jane", email=None, organization="", message="Hi")
+        is False
+    )
+
+
 def test_security_headers_present():
     response = client.get("/api/health")
     assert response.headers["x-content-type-options"] == "nosniff"

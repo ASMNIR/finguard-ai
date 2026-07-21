@@ -39,7 +39,7 @@ export function Nav() {
           ))}
           <Link
             href="/analyze"
-            className="rounded-lg bg-navy-900 px-4 py-2 text-sm font-semibold text-white shadow-card hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+            className="rounded-full bg-coral-500 px-4 py-2 text-sm font-semibold text-white shadow-card hover:bg-coral-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral-600"
           >
             Analyze a Case
           </Link>

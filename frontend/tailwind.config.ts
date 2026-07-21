@@ -33,6 +33,15 @@ const config: Config = {
           200: "#DCE3EA",
         },
         offwhite: "#F7FAFC",
+        coral: {
+          400: "#F58A66",
+          500: "#F0704A",
+          600: "#E2582F",
+        },
+        mint: {
+          50: "#EAF7F3",
+          100: "#DCF3EC",
+        },
       },
       fontFamily: {
         heading: ["var(--font-heading)", "sans-serif"],
@@ -42,9 +51,11 @@ const config: Config = {
       boxShadow: {
         card: "0 1px 2px rgba(11,38,61,0.06), 0 8px 24px rgba(11,38,61,0.08)",
         glow: "0 0 40px rgba(41,197,216,0.25)",
+        soft: "0 20px 50px -12px rgba(11,38,61,0.18)",
       },
       borderRadius: {
         xl2: "1.25rem",
+        xl3: "2rem",
       },
     },
   },

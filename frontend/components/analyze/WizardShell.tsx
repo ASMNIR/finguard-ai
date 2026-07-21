@@ -16,7 +16,7 @@ export function WizardShell({ step, children }: { step: number; children: ReactN
               <span
                 className={clsx(
                   "inline-flex items-center gap-1.5 rounded-full border px-3 py-1",
-                  isActive && "border-teal-700 bg-teal-700 text-white",
+                  isActive && "border-coral-500 bg-coral-500 text-white",
                   isDone && !isActive && "border-emerald-500/50 bg-emerald-500/10 text-emerald-700",
                   !isActive && !isDone && "border-slate-200 bg-white text-slate-500"
                 )}

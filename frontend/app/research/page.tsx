@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   description: "Research overview, working paper, reproducibility package, and validation roadmap.",
 };
 
-const SECTIONS: { title: string; icon: IconName; body: React.ReactNode }[] = [
+function buildSections(attribution: ReturnType<typeof getAttribution>): { title: string; icon: IconName; body: React.ReactNode }[] {
+  return [
   {
     title: "Research overview",
     icon: "book",
@@ -44,6 +45,20 @@ const SECTIONS: { title: string; icon: IconName; body: React.ReactNode }[] = [
         Financial Fraud and Consumer-Harm Triage in U.S. Financial Services." This is a working paper, not a
         peer-reviewed article. It has not undergone peer review, and no claim of peer review is made anywhere on this
         site.
+        {attribution.authorZenodo && (
+          <>
+            {" "}It is permanently archived on Zenodo with a citable DOI:{" "}
+            <a href={attribution.authorZenodo} className="font-medium text-teal-700 hover:underline">
+              {attribution.authorZenodo.replace("https://doi.org/", "")}
+            </a>.
+          </>
+        )}
+        {attribution.authorSsrn && (
+          <>
+            {" "}It is also posted on SSRN:{" "}
+            <a href={attribution.authorSsrn} className="font-medium text-teal-700 hover:underline">SSRN preprint</a>.
+          </>
+        )}
       </p>
     ),
   },
@@ -79,9 +94,21 @@ const SECTIONS: { title: string; icon: IconName; body: React.ReactNode }[] = [
   {
     title: "Citation",
     icon: "document",
-    body: <p>See <code>CITATION.cff</code> in the repository root for machine-readable citation metadata.</p>,
+    body: (
+      <>
+        <p>See <code>CITATION.cff</code> in the repository root for machine-readable citation metadata.</p>
+        {attribution.authorZenodo && (
+          <p className="mt-2 rounded-lg bg-slate-50 p-3 font-mono text-xs text-slate-700">
+            {attribution.authorName} ({new Date().getFullYear()}). <em>FinGuard-AI: A Rules-First, Explainable Framework for
+            Narrative-Based Financial Fraud and Consumer-Harm Triage in U.S. Financial Services.</em> Zenodo.{" "}
+            {attribution.authorZenodo}
+          </p>
+        )}
+      </>
+    ),
   },
-];
+  ];
+}
 
 export default function ResearchPage() {
   const attribution = getAttribution();
@@ -95,7 +122,7 @@ export default function ResearchPage() {
       />
 
       <Container className="py-10 space-y-5 pb-16">
-        {SECTIONS.map((section, i) => (
+        {buildSections(attribution).map((section, i) => (
           <SectionCard key={section.title} title={section.title} icon={section.icon} accent={accentFor(i)}>
             {section.body}
           </SectionCard>

@@ -3,6 +3,8 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, EmailStr, Field
 
+from ..services.email_service import send_contact_email
+
 router = APIRouter(tags=["contact"])
 
 
@@ -23,10 +25,22 @@ def submit_contact(payload: ContactRequest) -> dict[str, str]:
         raise HTTPException(status_code=400, detail="Submission rejected.")
     if not payload.message.strip():
         raise HTTPException(status_code=400, detail="Please include a message.")
-    # Research-prototype behavior: acknowledged but not persisted. A
-    # production deployment would require a documented retention policy
-    # and consent notice before storing contact-form submissions.
+
+    delivered = send_contact_email(
+        inquiry_type=payload.inquiry_type,
+        name=payload.name,
+        email=payload.email,
+        organization=payload.organization,
+        message=payload.message,
+    )
+    # Research-prototype behavior: forwarded by email, not persisted server-side. A
+    # production deployment would require a documented retention policy and
+    # consent notice before storing contact-form submissions.
     return {
         "status": "received",
-        "message": "Thank you for reaching out. This research prototype does not store contact-form submissions.",
+        "message": (
+            "Thank you for reaching out. Your message has been sent."
+            if delivered
+            else "Thank you for reaching out. This research prototype does not store contact-form submissions."
+        ),
     }

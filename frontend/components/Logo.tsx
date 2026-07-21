@@ -13,6 +13,7 @@ interface LogoProps {
 export function Logo({ className, gradientId = "logoGradient", variant = "brand" }: LogoProps) {
   const stops =
     variant === "light" ? (["#12B8B0", "#29C5D8"] as const) : (["#12B8B0", "#0B263D"] as const);
+  const accentDot = variant === "light" ? "#F58A66" : "#F0704A";
   return (
     <svg viewBox="0 0 32 32" className={className} role="img" aria-label="FinGuard-AI logo">
       <defs>
@@ -33,6 +34,8 @@ export function Logo({ className, gradientId = "logoGradient", variant = "brand"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      {/* coral accent, ties the mark to the site's floating-shape motif */}
+      <circle cx="24.5" cy="6.5" r="2.6" fill={accentDot} stroke="#ffffff" strokeWidth="1.1" />
     </svg>
   );
 }

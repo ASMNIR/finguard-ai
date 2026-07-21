@@ -1,7 +1,16 @@
 import Link from "next/link";
 import { Container } from "@/components/Container";
 import { DisclaimerBanner } from "@/components/DisclaimerBanner";
+import { Reveal } from "@/components/Reveal";
+import { ShieldScan } from "@/components/illustrations/ShieldScan";
 import { getAttribution } from "@/lib/config";
+
+const FACTS = [
+  { value: "100", label: "automated tests" },
+  { value: "10", label: "fraud & harm typologies" },
+  { value: "4", label: "explainable 0–100 scores" },
+  { value: "0", label: "black-box ML in scoring" },
+];
 
 const SCORE_PREVIEW = [
   { label: "Fraud Risk", score: 78, text: "text-orange-600" },
@@ -37,47 +46,75 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-teal-700 text-white">
-        <div className="pointer-events-none absolute -right-32 -top-32 h-[28rem] w-[28rem] rounded-full bg-cyan-400/15 blur-3xl" aria-hidden />
-        <div className="pointer-events-none absolute -bottom-40 -left-24 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" aria-hidden />
-        <Container className="relative py-20 sm:py-28">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-cyan-100">
-            Research Prototype
-          </span>
-          <h1 className="mt-6 max-w-3xl font-heading text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
-            FinGuard-AI
-          </h1>
-          <p className="mt-4 max-w-2xl text-xl font-medium text-cyan-100 sm:text-2xl">
-            Explainable Intelligence for Financial Fraud and Consumer Harm
-          </p>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-300">
-            FinGuard-AI transforms complaint narratives and structured case information into transparent fraud
-            indicators, consumer-harm assessments, dispute-friction signals, recovery time-sensitivity measures, and
-            practical consumer-assistance guidance.
-          </p>
+      <section className="relative overflow-hidden bg-mint-50">
+        <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-teal-500/10 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-coral-400/10 blur-3xl" aria-hidden />
 
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Link
-              href="/analyze"
-              className="rounded-full bg-cyan-400 px-6 py-3.5 text-sm font-semibold text-navy-950 shadow-glow transition-all duration-200 hover:-translate-y-0.5 hover:bg-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              Analyze a Case
-            </Link>
-            <Link
-              href="/research"
-              className="rounded-full border border-white/25 px-6 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              Explore the Research
-            </Link>
-          </div>
+        {/* floating decorative shapes, Plax-style */}
+        <div className="pointer-events-none absolute inset-0 hidden select-none sm:block" aria-hidden>
+          <span className="float-shape absolute right-[26%] top-16 h-3 w-3 rotate-45 rounded-sm bg-coral-400/70" style={{ animationDelay: "0.2s" }} />
+          <span className="float-shape absolute right-[14%] top-40 h-2.5 w-2.5 rounded-full bg-teal-500/60" style={{ animationDelay: "1.1s" }} />
+          <span className="float-shape absolute right-[34%] top-56 h-4 w-4 rounded-full border-2 border-coral-500/50" style={{ animationDelay: "0.6s" }} />
+          <span className="float-shape absolute right-[8%] top-72 h-3 w-3 rotate-12 rounded-sm bg-emerald-500/50" style={{ animationDelay: "1.6s" }} />
+        </div>
 
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
-            <Link href="/methodology" className="underline-offset-4 transition hover:text-cyan-200 hover:underline">View Methodology</Link>
-            <Link href="/dashboard" className="underline-offset-4 transition hover:text-cyan-200 hover:underline">Open Synthetic Dashboard</Link>
-            <Link href="/governance" className="underline-offset-4 transition hover:text-cyan-200 hover:underline">Read Governance Framework</Link>
-          </div>
+        <Container className="relative grid gap-12 py-20 sm:py-24 lg:grid-cols-2 lg:items-center lg:gap-8">
+          <Reveal>
+            <span className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-teal-700 shadow-sm">
+              Research Prototype
+            </span>
+            <h1 className="mt-6 max-w-xl font-heading text-6xl font-extrabold leading-[1.02] tracking-tight text-navy-950 sm:text-7xl">
+              Your Ally Against Financial Fraud
+            </h1>
+            <p className="mt-5 max-w-lg text-xl font-medium text-teal-700 sm:text-2xl">
+              Explainable intelligence for fraud and consumer harm
+            </p>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-slate-600">
+              FinGuard-AI turns complaint narratives and structured case facts into transparent fraud indicators,
+              consumer-harm assessments, dispute-friction signals, and recovery-urgency measures — every score
+              traceable back to the exact phrases that produced it.
+            </p>
 
-          <p className="mt-10 text-sm text-slate-400">Created by {attribution.authorName}</p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link
+                href="/analyze"
+                className="inline-flex items-center gap-2 rounded-full bg-coral-500 px-7 py-3.5 text-sm font-semibold text-white shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral-600"
+              >
+                Analyze a Case <span aria-hidden>→</span>
+              </Link>
+              <Link
+                href="/research"
+                className="rounded-full border border-navy-900/15 bg-white px-7 py-3.5 text-sm font-semibold text-navy-900 transition-all duration-200 hover:-translate-y-0.5 hover:border-navy-900/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-900"
+              >
+                Explore the Research
+              </Link>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-500">
+              <Link href="/methodology" className="underline-offset-4 transition hover:text-teal-700 hover:underline">View Methodology</Link>
+              <Link href="/dashboard" className="underline-offset-4 transition hover:text-teal-700 hover:underline">Open Synthetic Dashboard</Link>
+              <Link href="/governance" className="underline-offset-4 transition hover:text-teal-700 hover:underline">Read Governance Framework</Link>
+            </div>
+
+            <p className="mt-10 text-sm text-slate-500">Created by {attribution.authorName}</p>
+          </Reveal>
+
+          <Reveal delay={150} className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <ShieldScan className="h-auto w-full" />
+          </Reveal>
+        </Container>
+
+        <Container className="relative pb-16">
+          <Reveal delay={100}>
+            <div className="grid grid-cols-2 gap-4 rounded-3xl bg-white p-6 shadow-soft sm:grid-cols-4 sm:p-8">
+              {FACTS.map((fact) => (
+                <div key={fact.label} className="text-center">
+                  <p className="font-heading text-3xl font-extrabold text-navy-950 sm:text-4xl">{fact.value}</p>
+                  <p className="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500 sm:text-sm">{fact.label}</p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -99,52 +136,50 @@ export default function HomePage() {
 
       <section className="py-16 sm:py-24">
         <Container>
-          <div className="max-w-2xl">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight text-navy-900 sm:text-4xl">
+          <Reveal className="max-w-2xl">
+            <h2 className="font-heading text-4xl font-extrabold tracking-tight text-navy-950 sm:text-5xl">
               Four explainable risk dimensions
             </h2>
             <p className="mt-3 text-lg text-slate-600">
               Every case receives four independent 0–100 scores, each built from visible, inspectable factors.
               Illustrative example shown below.
             </p>
-          </div>
+          </Reveal>
           <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
-            {SCORE_PREVIEW.map((item) => (
-              <div
-                key={item.label}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
-              >
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{item.label}</p>
-                <p className={`mt-3 font-mono text-4xl font-bold ${item.text}`}>{item.score}</p>
-                <p className="mt-1 text-xs text-slate-400">out of 100 · illustrative</p>
-              </div>
+            {SCORE_PREVIEW.map((item, i) => (
+              <Reveal key={item.label} delay={i * 80}>
+                <div className="h-full rounded-3xl bg-white p-6 shadow-soft transition-all duration-200 hover:-translate-y-1">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{item.label}</p>
+                  <p className={`mt-3 font-mono text-4xl font-bold ${item.text}`}>{item.score}</p>
+                  <p className="mt-1 text-xs text-slate-400">out of 100 · illustrative</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="bg-white py-16 sm:py-24">
+      <section className="bg-mint-50/60 py-16 sm:py-24">
         <Container>
-          <div className="max-w-2xl">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight text-navy-900 sm:text-4xl">
+          <Reveal className="max-w-2xl">
+            <h2 className="font-heading text-4xl font-extrabold tracking-tight text-navy-950 sm:text-5xl">
               Guided consumer-assistance workflow
             </h2>
             <p className="mt-3 text-lg text-slate-600">
               A ten-step guided process, from safety notice to a downloadable case report.
             </p>
-          </div>
+          </Reveal>
           <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {PROCESS_STEPS.map((step, index) => (
-              <li
-                key={step.title}
-                className="rounded-2xl border border-slate-200 bg-offwhite/60 p-6 transition-all duration-200 hover:-translate-y-1 hover:border-teal-200 hover:shadow-lg"
-              >
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-navy-900 font-mono text-xs font-semibold text-white">
-                  {index + 1}
-                </span>
-                <h3 className="mt-4 font-heading text-base font-semibold text-navy-900">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
-              </li>
+              <Reveal key={step.title} delay={(index % 3) * 80}>
+                <li className="h-full rounded-3xl bg-white p-6 shadow-soft transition-all duration-200 hover:-translate-y-1">
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-coral-500 font-mono text-xs font-semibold text-white">
+                    {index + 1}
+                  </span>
+                  <h3 className="mt-4 font-heading text-base font-semibold text-navy-900">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.description}</p>
+                </li>
+              </Reveal>
             ))}
           </ol>
         </Container>
@@ -152,10 +187,12 @@ export default function HomePage() {
 
       <section className="py-16 sm:py-24">
         <Container>
-          <h2 className="font-heading text-3xl font-semibold tracking-tight text-navy-900 sm:text-4xl">
-            Fraud and risk typologies covered
-          </h2>
-          <div className="mt-8 flex flex-wrap gap-2.5">
+          <Reveal>
+            <h2 className="font-heading text-4xl font-extrabold tracking-tight text-navy-950 sm:text-5xl">
+              Fraud and risk typologies covered
+            </h2>
+          </Reveal>
+          <Reveal delay={100} className="mt-8 flex flex-wrap gap-2.5">
             {TYPOLOGIES.map((typology) => (
               <span
                 key={typology}
@@ -164,7 +201,7 @@ export default function HomePage() {
                 {typology}
               </span>
             ))}
-          </div>
+          </Reveal>
           <p className="mt-5 text-sm text-slate-500">
             When evidence is weak, FinGuard-AI reports an <strong className="text-slate-700">Insufficient evidence</strong> state
             rather than forcing a classification.
@@ -172,9 +209,10 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section className="bg-navy-950 py-16 text-white sm:py-24">
-        <Container className="grid gap-12 sm:grid-cols-2 sm:gap-8">
-          <div>
+      <section className="relative overflow-hidden bg-navy-950 py-16 text-white sm:py-24">
+        <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-coral-500/10 blur-3xl" aria-hidden />
+        <Container className="relative grid gap-12 sm:grid-cols-2 sm:gap-8">
+          <Reveal>
             <h2 className="font-heading text-2xl font-semibold tracking-tight">Explainability, not a black box</h2>
             <p className="mt-3 text-base leading-relaxed text-slate-300">
               Every score decomposes into a visible factor table. Every typology decision traces to matched phrases
@@ -186,8 +224,8 @@ export default function HomePage() {
             >
               Open the Rule Explorer <span aria-hidden>→</span>
             </Link>
-          </div>
-          <div>
+          </Reveal>
+          <Reveal delay={120}>
             <h2 className="font-heading text-2xl font-semibold tracking-tight">Research, methodology &amp; governance</h2>
             <p className="mt-3 text-base leading-relaxed text-slate-300">
               FinGuard-AI documents its typology definitions, scoring construction, limitations, and a NIST AI RMF
@@ -198,7 +236,7 @@ export default function HomePage() {
               <Link href="/governance" className="underline-offset-4 hover:underline">Governance</Link>
               <Link href="/research" className="underline-offset-4 hover:underline">Research</Link>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>

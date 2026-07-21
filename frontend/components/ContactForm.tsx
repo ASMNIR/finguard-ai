@@ -20,13 +20,15 @@ export function ContactForm() {
   const [website, setWebsite] = useState(""); // honeypot
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [sentMessage, setSentMessage] = useState<string | null>(null);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setStatus("sending");
     setError(null);
     try {
-      await submitContact({ inquiry_type: inquiryType, name, email, organization, message, website });
+      const result = await submitContact({ inquiry_type: inquiryType, name, email, organization, message, website });
+      setSentMessage(result.message);
       setStatus("sent");
     } catch (err) {
       setStatus("error");
@@ -36,15 +38,14 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="rounded-xl2 border border-emerald-500/40 bg-emerald-500/10 p-5 text-sm text-emerald-800">
-        Thank you for reaching out. This research prototype does not store contact-form submissions without
-        disclosure, and none was stored for this submission beyond processing your request.
+      <div className="rounded-3xl border border-emerald-500/40 bg-emerald-500/10 p-6 text-sm text-emerald-800 shadow-soft">
+        {sentMessage ?? "Thank you for reaching out."}
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-xl2 border border-slate-200 bg-white p-6">
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-soft">
       <input
         type="text"
         value={website}
@@ -96,7 +97,7 @@ export function ContactForm() {
 
       {error && <p className="text-sm text-redrisk-500">{error}</p>}
 
-      <button type="submit" disabled={status === "sending"} className="w-full rounded-lg bg-navy-900 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50 sm:w-auto">
+      <button type="submit" disabled={status === "sending"} className="w-full rounded-full bg-coral-500 px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-coral-600 disabled:opacity-50 sm:w-auto">
         {status === "sending" ? "Sending…" : "Send message"}
       </button>
     </form>

@@ -27,3 +27,4 @@ Thumbs.db
 # Build artifacts
 *.zip
 !research/legacy_mvp_reference.zip
+*.tsbuildinfo

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Container } from "@/components/Container";
 import { PageHero } from "@/components/content/PageHero";
 import { SectionCard, accentFor } from "@/components/content/SectionCard";
+import { Reveal } from "@/components/Reveal";
 import { getAttribution } from "@/lib/config";
 import type { IconName } from "@/components/content/Icon";
 
@@ -102,8 +103,8 @@ export default function AboutPage() {
           </SectionCard>
         ))}
 
-        <div className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_24px_-4px_rgba(16,24,40,0.08)] sm:p-8">
-          <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-teal-500/[0.06] blur-2xl" />
+        <Reveal className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-soft sm:p-8">
+          <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-coral-400/[0.08] blur-2xl" />
           <div className="relative flex items-center gap-4">
             <Image
               src="/images/asm-fahim.jpg"
@@ -124,22 +125,25 @@ export default function AboutPage() {
           </p>
           <div className="relative mt-4 flex flex-wrap gap-2 text-sm">
             {attribution.authorLinkedin && (
-              <a href={attribution.authorLinkedin} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 hover:bg-teal-50">LinkedIn</a>
+              <a href={attribution.authorLinkedin} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">LinkedIn</a>
             )}
             {attribution.authorGithub && (
-              <a href={attribution.authorGithub} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 hover:bg-teal-50">GitHub</a>
+              <a href={attribution.authorGithub} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">GitHub</a>
             )}
             {attribution.authorGoogleScholar && (
-              <a href={attribution.authorGoogleScholar} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 hover:bg-teal-50">Google Scholar</a>
+              <a href={attribution.authorGoogleScholar} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">Google Scholar</a>
             )}
             {attribution.authorOrcid && (
-              <a href={`https://orcid.org/${attribution.authorOrcid}`} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 hover:bg-teal-50">ORCID</a>
+              <a href={`https://orcid.org/${attribution.authorOrcid}`} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">ORCID</a>
             )}
             {attribution.authorSsrn && (
-              <a href={attribution.authorSsrn} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 hover:bg-teal-50">SSRN</a>
+              <a href={attribution.authorSsrn} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">SSRN</a>
+            )}
+            {attribution.authorZenodo && (
+              <a href={attribution.authorZenodo} className="rounded-full bg-slate-50 px-3 py-1.5 font-medium text-teal-700 transition hover:bg-coral-50 hover:text-coral-600">Zenodo (DOI)</a>
             )}
           </div>
-        </div>
+        </Reveal>
       </Container>
     </>
   );

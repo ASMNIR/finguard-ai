@@ -41,7 +41,11 @@ class Settings(BaseSettings):
     AUTHOR_ZENODO: str = ""
     RESEARCH_PAPER_URL: str = ""
     LIVE_APP_URL: str = ""
-    CONTACT_EMAIL: str = ""
+    CONTACT_EMAIL: str = "asmfahim987@gmail.com"
+
+    # Contact-form delivery. Leave RESEND_API_KEY unset to keep the form's
+    # current "received but not stored" behavior with no outbound email.
+    RESEND_API_KEY: str = ""
 
     PROJECT_NAME: str = "FinGuard-AI"
     PROJECT_FULL_TITLE: str = (

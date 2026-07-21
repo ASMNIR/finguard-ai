@@ -36,9 +36,21 @@ export function Footer() {
   const attribution = getAttribution();
   const year = new Date().getFullYear();
 
+  const citationLinks: { href: string; label: string }[] = [
+    attribution.authorGoogleScholar ? { href: attribution.authorGoogleScholar, label: "Google Scholar" } : null,
+    attribution.authorOrcid ? { href: `https://orcid.org/${attribution.authorOrcid}`, label: "ORCID" } : null,
+    attribution.authorZenodo ? { href: attribution.authorZenodo, label: "Zenodo (DOI)" } : null,
+    attribution.authorSsrn ? { href: attribution.authorSsrn, label: "SSRN" } : null,
+    attribution.authorGithub ? { href: attribution.authorGithub, label: "GitHub" } : null,
+    attribution.authorLinkedin ? { href: attribution.authorLinkedin, label: "LinkedIn" } : null,
+  ].filter((link): link is { href: string; label: string } => link !== null);
+
   return (
-    <footer className="border-t border-slate-200 bg-navy-950 text-slate-200">
-      <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="relative overflow-hidden border-t border-slate-200 bg-navy-950 text-slate-200">
+      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-coral-500/10 blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-teal-500/10 blur-3xl" aria-hidden />
+
+      <Container className="relative grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 font-heading text-lg font-bold text-white">
             <Logo className="h-8 w-8" gradientId="footerLogoGradient" variant="light" />
@@ -48,6 +60,20 @@ export function Footer() {
             FinGuard-AI is an explainable financial-fraud and consumer-harm research prototype designed and
             developed by {attribution.authorName}.
           </p>
+
+          {citationLinks.length > 0 && (
+            <div className="mt-5 flex flex-wrap gap-2">
+              {citationLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:border-coral-400/60 hover:text-coral-300"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         {COLUMNS.map((column) => (
@@ -58,7 +84,7 @@ export function Footer() {
             <ul className="mt-3 space-y-2">
               {column.links.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-slate-300 hover:text-cyan-400">
+                  <Link href={link.href} className="text-sm text-slate-300 transition hover:text-cyan-400">
                     {link.label}
                   </Link>
                 </li>
@@ -68,7 +94,7 @@ export function Footer() {
         ))}
       </Container>
 
-      <div className="border-t border-white/10">
+      <div className="relative border-t border-white/10">
         <Container className="flex flex-col gap-2 py-6 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {attribution.authorName}. FinGuard-AI Research Project.

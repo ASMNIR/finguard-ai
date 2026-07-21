@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Reveal } from "@/components/Reveal";
 import { Icon, type IconName } from "./Icon";
 
 const ACCENTS = {
@@ -34,16 +35,18 @@ export function SectionCard({
   id?: string;
 }) {
   return (
-    <div id={id} className="scroll-mt-24 rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_24px_-4px_rgba(16,24,40,0.08)] sm:p-8">
-      <div className="flex items-start gap-4">
-        <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${ACCENTS[accent]}`} aria-hidden>
-          <Icon name={icon} className="h-5 w-5" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <h2 className="font-heading text-lg font-semibold tracking-tight text-navy-900 sm:text-xl">{title}</h2>
-          <div className="prose-content mt-2 max-w-none [&>p:first-child]:mt-0">{children}</div>
+    <Reveal>
+      <div id={id} className="scroll-mt-24 rounded-3xl bg-white p-6 shadow-soft sm:p-8">
+        <div className="flex items-start gap-4">
+          <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${ACCENTS[accent]}`} aria-hidden>
+            <Icon name={icon} className="h-5 w-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <h2 className="font-heading text-lg font-semibold tracking-tight text-navy-900 sm:text-xl">{title}</h2>
+            <div className="prose-content mt-2 max-w-none [&>p:first-child]:mt-0">{children}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </Reveal>
   );
 }
