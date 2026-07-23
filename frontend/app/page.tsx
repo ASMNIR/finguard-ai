@@ -70,9 +70,10 @@ export default function HomePage() {
               Explainable intelligence for fraud and consumer harm
             </p>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-slate-600">
-              FinGuard-AI turns complaint narratives and structured case facts into transparent fraud indicators,
-              consumer-harm assessments, dispute-friction signals, and recovery-urgency measures — every score
-              traceable back to the exact phrases that produced it.
+              FinGuard-AI starts where financial fraud actually begins: a scam call, a stolen identity, a
+              manipulated transfer. It turns that story, plus the structured facts of the case, into transparent
+              fraud indicators, consumer-harm assessments, dispute-friction signals, and recovery-urgency measures.
+              Every score traces back to the exact phrases that produced it: nothing hidden, nothing guessed.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
